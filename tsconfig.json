@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "sourceMap": true,
+    "outDir": "build",
+    "target": "es2017",
+    "incremental": true,
+    "module": "commonjs",
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "skipDefaultLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "inlineSources": true,
+    "paths": {
+      "@app/*": ["./src/*"],
+      "@typings/*": ["./typings/*"]
+    }
+  },
+  "include": ["src", "typings", "__test__"],
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}
