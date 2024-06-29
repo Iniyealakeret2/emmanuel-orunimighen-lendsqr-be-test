@@ -1,7 +1,8 @@
 import httpContext from "express-http-context";
 
-import { UserTokenType } from "../typings/user";
-import { SessionType } from "../typings/session";
+import { UserTokenType } from "../../typings/user";
+//@ts-ignore
+import { SessionType } from "../../typings/session";
 
 type SessionReturnType = UserTokenType &
   SessionType & {

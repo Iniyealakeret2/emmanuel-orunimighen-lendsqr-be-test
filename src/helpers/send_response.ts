@@ -6,7 +6,7 @@
  * @returns {ResponseInterface} {ResponseInterface} Returns the Response object
  */
 
-import { ResponseInterface } from "../typings/helpers";
+import { ResponseInterface } from "../../typings/helpers";
 
 export function sendResponse({
   status,
