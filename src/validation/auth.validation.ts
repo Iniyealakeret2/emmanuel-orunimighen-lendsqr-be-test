@@ -1,5 +1,5 @@
 import { Joi, Segments } from "celebrate";
-import { UserType } from "../typings/user";
+import { UserType } from "../../typings/user";
 
 /**
  * Object representing the Validation check for app auth HTTP requests
@@ -16,12 +16,16 @@ export default {
    * @returns {Partial<UserType>} {Partial<UserInterface>} Returns the Request object after validating user inputs from req.body
    */
   signup: {
-    [Segments.BODY]: Joi.object<Pick<UserType, "email" | "password" | "full_name">>().keys({
+    [Segments.BODY]: Joi.object<
+      Pick<UserType, "email" | "password" | "first_name" | "last_name">
+    >().keys({
       email: Joi.string().min(6).max(255).required(),
 
       password: Joi.string().min(6).max(255).required(),
 
-      full_name: Joi.string().min(6).max(255).required(),
+      last_name: Joi.string().min(6).max(255).required(),
+
+      first_name: Joi.string().min(6).max(255).required(),
     }),
   },
 
