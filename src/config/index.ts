@@ -1,6 +1,7 @@
 import { Joi } from "celebrate";
 
 import { config as configEnv } from "dotenv";
+import { EnvironmentInterface } from "@typings/config";
 
 configEnv();
 
@@ -8,6 +9,14 @@ const envVarsSchema = Joi.object<EnvironmentInterface>({
   DATABASE_NAME: Joi.string(),
 
   PORT: Joi.number().default(4040),
+
+  DB_PORT: Joi.number().default(3306),
+
+  DB_HOST: Joi.string().default(3306),
+
+  DB_USER: Joi.string().default(3306),
+
+  DB_PASSWORD: Joi.string().default(3306),
 
   EMAIL_PORT: Joi.number().default(587),
 
