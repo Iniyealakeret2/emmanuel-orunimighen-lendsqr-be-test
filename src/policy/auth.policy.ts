@@ -2,12 +2,13 @@ import httpStatus from "http-status";
 import { TokenExpiredError } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-import { SessionType } from "../typings/session";
+//@ts-ignore
+import { SessionType } from "../../typings/session";
 import authService from "../services/auth.service";
 import { useSession } from "../helpers/use_session";
 import { sendResponse } from "../helpers/send_response";
-import { AuthPolicyInterface } from "../typings/policies";
-import { ExpressResponseInterface } from "../typings/helpers";
+import { AuthPolicyInterface } from "../../typings/policies";
+import { ExpressResponseInterface } from "../../typings/helpers";
 
 /**
  *
@@ -93,7 +94,7 @@ export default class AuthPolicy extends AuthPolicyInterface {
     const { refresh_token }: Pick<SessionType, "refresh_token"> = req.body;
 
     try {
-      const token = await authService.verifyRefreshToken(refresh_token);
+      const token = await authService.verifyRefreshToken(refresh_token!!);
 
       //@ts-ignore
       const user = await UserModel.findOne({ id: token?.aud, email: token?.email });
