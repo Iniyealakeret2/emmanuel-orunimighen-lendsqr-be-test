@@ -4,6 +4,6 @@
  * ****************************                              **************************** *
  * ************************************************************************************** */
 
-export * as default from "./email.template";
+// export * as default from "./email.template";
 
 export * from "./email.template";
