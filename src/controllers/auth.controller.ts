@@ -2,13 +2,17 @@ import _ from "lodash";
 import httpStatus from "http-status";
 import { Request, Response, NextFunction } from "express";
 
-import config from "../config";
-
+import config from "@app/config";
+import { UserType } from "@typings/user";
 import APIError from "../helpers/api.errors";
-import { generateOTP } from "../helpers/generate_otp";
+import * as EmailTemplate from "@app/template";
+import { UserModel } from "@app/model/user.model";
+import EmailService from "@app/services/email.service";
+import { SessionModel } from "@app/model/session.model";
+import { generateOTP } from "@app/helpers/generate_otp";
 import { sendResponse } from "../helpers/send_response";
-import { AuthControllerInterface } from "../typings/auth";
-import { ExpressResponseInterface } from "../typings/helpers";
+import { AuthControllerInterface } from "../../typings/auth";
+import { ExpressResponseInterface } from "../../typings/helpers";
 
 /**
  *
@@ -38,6 +42,31 @@ export default class AuthController extends AuthControllerInterface {
     next: NextFunction
   ): ExpressResponseInterface {
     try {
+      const userModel = new UserModel();
+      const sessionModel = new SessionModel();
+
+      const { email }: UserType = req.body;
+
+      const userExists = await userModel.findUserByEmail({ email });
+
+      if (userExists) {
+        throw new APIError({
+          status: httpStatus.BAD_REQUEST,
+          message: "Account already registered with us",
+        });
+      }
+      const code = config.IS_PRODUCTION_OR_STAGING ? generateOTP() : config.DEFAULT_OTP_CODE;
+
+      const user = await userModel.createUser(req.body);
+
+      await sessionModel.createSession({ otp: code, user_id: user!!.id });
+
+      EmailService.sendMail({
+        to: user!!.email,
+        subject: "Verify your account",
+        html: EmailTemplate.signupMessageTemplate({ otp: code }),
+      });
+
       return res
         .status(httpStatus.CREATED)
         .json(sendResponse({ message: "success", status: httpStatus.CREATED }));
@@ -59,7 +88,7 @@ export default class AuthController extends AuthControllerInterface {
    */
 
   public static async signin(
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
   ): ExpressResponseInterface {
@@ -85,7 +114,7 @@ export default class AuthController extends AuthControllerInterface {
    */
 
   public static async verifyOtp(
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
   ): ExpressResponseInterface {
