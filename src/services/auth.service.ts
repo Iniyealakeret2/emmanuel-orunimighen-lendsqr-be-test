@@ -1,8 +1,8 @@
 import jwt, { JwtPayload, VerifyErrors } from "jsonwebtoken";
 
 import config from "../config";
-import { UserType } from "../typings/user";
-import { AuthServiceInterface } from "../typings/auth";
+import { UserType } from "../../typings/user";
+import { AuthServiceInterface } from "../../typings/auth";
 
 /**
  *

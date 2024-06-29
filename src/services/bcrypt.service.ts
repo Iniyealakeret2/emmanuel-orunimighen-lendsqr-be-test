@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import config from "../config";
-import { BcryptServiceInterface } from "../typings/services";
+import { BcryptServiceInterface } from "../../typings/services";
 
 /**
  *

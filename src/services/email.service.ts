@@ -3,7 +3,8 @@ import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 import config from "@app/config/index";
 import ErrorService from "./error.service";
-import { EmailServiceInterface } from "@app/typings/services";
+import { EmailServiceInterface } from "@typings/services";
+import { ErrorResponseInterface } from "@typings/config";
 
 /**
  *

@@ -7,8 +7,9 @@ import { ValidationError as JoiValidationError } from "@hapi/joi";
 
 import config from "../config";
 import APIError from "../helpers/api.errors";
-import { ErrorServiceInterface } from "../typings/error";
+import { ErrorServiceInterface } from "../../typings/error";
 import { joiErrorFormatter } from "../helpers/joi_error_formatter";
+import { ErrorResponseInterface, ExpressErrorInterface } from "@typings/config";
 
 /**
  *
