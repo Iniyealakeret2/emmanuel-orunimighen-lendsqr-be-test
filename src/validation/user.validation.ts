@@ -1,7 +1,7 @@
 import { Joi, Segments } from "celebrate";
 
-import { UserType } from "../typings/user";
-import { DonationQueryParams, DonationQueryValidationType } from "../typings/donations";
+import { UserType } from "../../typings/user";
+import { DonationQueryParams, DonationQueryValidationType } from "@typings/donations";
 
 /**
  * Object representing the Validation check for app User HTTP requests

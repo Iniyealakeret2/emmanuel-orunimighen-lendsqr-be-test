@@ -3,7 +3,7 @@ import { Request, Response, Router } from "express";
 
 import AuthPolicy from "../policy/auth.policy";
 import authRoute from "../routes/auth.routes";
-import userRoute from "../routes/user.routes";
+// import userRoute from "../routes/user.routes";
 
 const router = Router();
 
@@ -22,6 +22,6 @@ router.use("/auth", authRoute);
 router.use(AuthPolicy.hasAccessToken);
 
 // mount User routes
-router.use("/user", userRoute);
+// router.use("/user", userRoute);
 
 export default router;
