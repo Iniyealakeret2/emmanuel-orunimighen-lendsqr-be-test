@@ -20,8 +20,7 @@ export async function up(knex: Knex): Promise<void> {
     table.enu("role", [Role.USER, Role.ADMIN]).defaultTo(Role.USER);
 
     table.timestamp("created_at").defaultTo(knex.fn.now());
-
-    table.timestamp("updated_at").defaultTo(knex.fn.now());
+    table.datetime("updated_at").defaultTo(knex.fn.now());
   });
 }
 
