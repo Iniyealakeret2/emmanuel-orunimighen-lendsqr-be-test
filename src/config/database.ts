@@ -1,9 +1,9 @@
 import knex from "knex";
 
 import config from "@app/config";
-import knexConfig from "@app/knexfile";
+import knexConfig from "../../knexfile";
 
-const environment = config.NODE_ENV || "development";
+const environment = config.NODE_ENV;
 const database = knex(knexConfig[environment]);
 
 database
