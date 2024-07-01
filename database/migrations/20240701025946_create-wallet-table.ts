@@ -8,7 +8,7 @@ export async function up(knex: Knex): Promise<void> {
 
     table.integer("wallet_balance", 16).nullable();
 
-    table.uuid("id").primary().defaultTo(knex.fn.uuid());
+    table.uuid("id").primary();
 
     table.timestamps(true, true);
 

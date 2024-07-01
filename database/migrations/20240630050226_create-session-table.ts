@@ -14,7 +14,7 @@ export async function up(knex: Knex): Promise<void> {
 
     table.string("refresh_token", 512).nullable();
 
-    table.uuid("id").primary().defaultTo(knex.fn.uuid());
+    table.uuid("id").primary();
 
     table.timestamps(true, true);
 

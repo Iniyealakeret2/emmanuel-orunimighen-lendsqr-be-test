@@ -15,7 +15,7 @@ export async function up(knex: Knex): Promise<void> {
 
     table.boolean("is_verified").defaultTo(false);
 
-    table.uuid("id").primary().defaultTo(knex.fn.uuid());
+    table.uuid("id").primary();
 
     table.enu("role", [Role.USER, Role.ADMIN]).defaultTo(Role.USER);
 
