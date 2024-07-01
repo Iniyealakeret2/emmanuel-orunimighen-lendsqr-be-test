@@ -10,9 +10,7 @@ export async function up(knex: Knex): Promise<void> {
 
     table.uuid("id").primary();
 
-    table.timestamp("created_at").defaultTo(knex.fn.now());
-
-    table.datetime("updated_at").defaultTo(knex.fn.now());
+    table.timestamps(true);
 
     table.foreign("user_id").references("id").inTable("users");
   });
