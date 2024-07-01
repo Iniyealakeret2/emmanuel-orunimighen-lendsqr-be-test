@@ -21,7 +21,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
   },
 
   production: {
-    client: "mysql",
+    client: "mysql2",
     connection: {
       host: config.DB_HOST,
       user: config.DB_USER,
