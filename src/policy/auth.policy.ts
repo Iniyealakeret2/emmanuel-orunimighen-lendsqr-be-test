@@ -2,13 +2,14 @@ import httpStatus from "http-status";
 import { TokenExpiredError } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 
-//@ts-ignore
 import { SessionType } from "../../typings/session";
 import authService from "../services/auth.service";
 import { useSession } from "../helpers/use_session";
 import { sendResponse } from "../helpers/send_response";
 import { AuthPolicyInterface } from "../../typings/policies";
 import { ExpressResponseInterface } from "../../typings/helpers";
+import { UserModel } from "@app/model/user.model";
+import { SessionModel } from "@app/model/session.model";
 
 /**
  *
@@ -46,21 +47,23 @@ export default class AuthPolicy extends AuthPolicyInterface {
         const token = await authService.verifyAccessToken(signature);
 
         // Update the model once done
-        //@ts-ignore
+
+        // @ts-ignore
         const user = await UserModel.findOne({ id: token?.aud, email: token?.email });
         if (!user) {
           Error("Invalid Token");
         }
 
-        //@ts-ignore
-        const session = await SessionModel.findOne({ access_token, user_id: token?.aud });
+        const session = await SessionModel.findOneById({ user_id: user?.id });
 
         if (!session) {
           Error("Invalid Token");
         }
 
+        console.log("session from session", session);
+
         const { setSession } = useSession();
-        setSession({ ...token, ...session?.toJSON(), ...user.toJSON(), user, session });
+        setSession({ ...token, ...user, ...session });
 
         return next?.();
       } catch (error) {
@@ -96,19 +99,14 @@ export default class AuthPolicy extends AuthPolicyInterface {
     try {
       const token = await authService.verifyRefreshToken(refresh_token!!);
 
-      //@ts-ignore
+      // @ts-ignore
       const user = await UserModel.findOne({ id: token?.aud, email: token?.email });
 
       if (!user) {
         Error("Invalid Token");
       }
 
-      //@ts-ignore
-      const session = await SessionModel.findOne({
-        //@ts-ignore
-        user_id: token?.aud,
-        refresh_token: { $ne: null },
-      });
+      const session = await SessionModel.findOneById({ user_id: user?.id });
 
       if (!session) {
         Error("Invalid Token");
@@ -119,7 +117,7 @@ export default class AuthPolicy extends AuthPolicyInterface {
       }
 
       const { setSession } = useSession();
-      setSession({ ...token, ...session?.toJSON(), ...user.toJSON(), user });
+      setSession({ ...token, ...session, ...user });
 
       return next();
     } catch (error) {
