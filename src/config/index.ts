@@ -14,6 +14,12 @@ const envVarsSchema = Joi.object<EnvironmentInterface>({
 
   DB_HOST: Joi.string().default(3306),
 
+  KARMA_API: Joi.string(),
+
+  KARMA_SECRET: Joi.string(),
+
+  KARMA_BASE_URL: Joi.string().default("https://adjutor.lendsqr.com/v2/verification/karma"),
+
   DB_USER: Joi.string().default(3306),
 
   DB_PASSWORD: Joi.string().default(3306),
