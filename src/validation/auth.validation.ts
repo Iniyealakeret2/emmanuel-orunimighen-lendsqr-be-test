@@ -1,4 +1,5 @@
 import { Joi, Segments } from "celebrate";
+import { params } from "@typings/helpers";
 import { UserType } from "../../typings/user";
 
 /**
@@ -56,6 +57,18 @@ export default {
       otp: Joi.string().required(),
 
       email: Joi.string().required(),
+    }),
+  },
+
+  /**
+   * @description Validate user verify otp inputs
+   * @param {params} req - Request property object gotten from the request
+   * @property {id} param.id - User otp
+   * @returns {Partial<UserType>} {Partial<UserInterface>} Returns the Request object after validating user inputs from req.body
+   */
+  id: {
+    [Segments.PARAMS]: Joi.object<Pick<params, "id">>().keys({
+      id: Joi.string().required(),
     }),
   },
 };

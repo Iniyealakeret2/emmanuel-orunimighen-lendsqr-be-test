@@ -1,7 +1,7 @@
 import { Joi, Segments } from "celebrate";
 
 import { UserType } from "../../typings/user";
-import { DonationQueryParams, DonationQueryValidationType } from "@typings/donations";
+import { DonationQueryValidationType } from "@typings/donations";
 
 /**
  * Object representing the Validation check for app User HTTP requests
@@ -37,17 +37,25 @@ export default {
    * @property {id} param.id - User id
    * @returns {Partial<UserType>} {Partial<UserInterface>} Returns the Request object after validating user inputs from req.body
    */
-  donateAmount: {
+  transferFund: {
     [Segments.BODY]: Joi.object<{
       pin: number;
-      wallet_number: number;
-      amount_donated: number;
+      amount: number;
+      sender_wallet_number: number;
+      receiver_wallet_number: number;
     }>().keys({
       pin: Joi.number().integer().min(1000).max(9999).rule({ message: "PIN must be 4 digits" }),
 
-      amount_donated: Joi.number().min(10).required(),
+      amount: Joi.number().min(10).required(),
 
-      wallet_number: Joi.number()
+      sender_wallet_number: Joi.number()
+        .integer()
+        .min(1000000000)
+        .max(9999999999)
+        .rule({ message: "Account must be 10 Digits" })
+        .required(),
+
+      receiver_wallet_number: Joi.number()
         .integer()
         .min(1000000000)
         .max(9999999999)
@@ -62,18 +70,22 @@ export default {
    * @property {id} body.id - challenge id
    * @returns {ClientInterface} {ClientInterface} Returns the Request object after validating get all client inputs from req.query and req.params
    */
-  dateQuery: {
-    [Segments.QUERY]: Joi.object<
-      Pick<DonationQueryParams, "startDate" | "endDate"> &
-        Pick<DonationQueryValidationType, "page" | "limit">
-    >({
-      endDate: Joi.date(),
+  withDrawFund: {
+    [Segments.BODY]: Joi.object<{
+      pin: number;
+      amount: number;
+      wallet_number: number;
+    }>().keys({
+      pin: Joi.number().integer().min(1000).max(9999).rule({ message: "PIN must be 4 digits" }),
 
-      startDate: Joi.date(),
+      amount: Joi.number().min(10).required(),
 
-      page: Joi.number().default(1),
-
-      limit: Joi.number().default(10),
+      wallet_number: Joi.number()
+        .integer()
+        .min(1000000000)
+        .max(9999999999)
+        .rule({ message: "Account must be 10 Digits" })
+        .required(),
     }),
   },
 
