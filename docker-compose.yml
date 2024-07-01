@@ -1,13 +1,13 @@
 version: "3"
 services:
   sqlite:
-    container_name: fastmoni-container
-    image: sqlite:latest
+    container_name: lendsqr-container
+    image: mysql2:latest
     volumes:
-      - sqlite-data:/fastmoni
+      - mysql2-data:/lendsqr
     ports:
-      - "5432:5432"
+      - "30062:30062"
     restart: always
 
 volumes:
-  sqlite-data:
+  mysql2-data:

@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-RUN apk add --no-cache sqlite
+RUN apk add --no-cache mysql2
 WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
