@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/src/index",
   "scripts": {
-    "dev": "nodemon src/index",
+    "dev": "npx knex migrate:latest --knexfile knexfile.ts migrate:latest && nodemon src/index",
     "start": "tsc && node build/src/index",
     "format": "prettier --write \"**/*.{js,ts,tsx,json}\"",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
