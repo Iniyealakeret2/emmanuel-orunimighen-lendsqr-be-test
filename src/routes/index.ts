@@ -3,17 +3,19 @@ import { Request, Response, Router } from "express";
 
 import AuthPolicy from "../policy/auth.policy";
 import authRoute from "../routes/auth.routes";
-// import userRoute from "../routes/user.routes";
+import walletRoute from "@app/routes/wallet.routes";
 
 const router = Router();
 
 /** GET /health-check - Check service health */
 router.get("/health-check", (_req: Request, res: Response) =>
-  res.status(httpStatus.OK).json({ check: "fastmoni-test server started ok*-*" })
+  res.status(httpStatus.OK).json({ check: "lendsqr server started ok*-*" })
 );
 
 // mount Auth routes
 router.use("/auth", authRoute);
+// mount User routes
+// router.use("/wallet", walletRoute);
 
 /**
  * Check user access_token and authenticate user to perform HTTP requests
@@ -22,6 +24,6 @@ router.use("/auth", authRoute);
 router.use(AuthPolicy.hasAccessToken);
 
 // mount User routes
-// router.use("/user", userRoute);
+router.use("/wallet", walletRoute);
 
 export default router;

@@ -7,8 +7,8 @@
 import { Router } from "express";
 import { celebrate as validate } from "celebrate";
 
-import AuthController from "../controllers/auth.controller";
 import AuthValidation from "../validation/auth.validation";
+import AuthController from "@app/controllers/auth.controller";
 
 const router = Router();
 
@@ -19,6 +19,10 @@ router
 router
   .route("/signin")
   .post([validate(AuthValidation.signin, { abortEarly: false })], AuthController.signin);
+
+router
+  .route("/:id/account")
+  .get([validate(AuthValidation.id, { abortEarly: false })], AuthController.account);
 
 router
   .route("/verify")
