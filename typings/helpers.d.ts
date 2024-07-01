@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { UserType } from "@typings/user";
 import { PaginateOptions, ObjectId } from "mongoose";
 
 export interface CustomErrorInterface {
@@ -34,4 +35,15 @@ export type ExpressResponseInterface = Promise<void | Response<any, Record<strin
 export type ConstructPageableOption = Pick<PaginateOptions, "page" | "limit" | "offset"> & {
   skip?: number;
   count: number;
+};
+
+export type params = {
+  id?: string;
+  otp?: string;
+  email?: string;
+  user_id?: string;
+  account_pin?: string;
+  is_verified?: boolean;
+  access_token?: string;
+  wallet_number?: string;
 };

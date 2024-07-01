@@ -1,5 +1,8 @@
 export interface EnvironmentInterface extends NodeJS.ProcessEnv {
   PORT: string;
+  KARMA_API: string;
+  KARMA_SECRET: string;
+  KARMA_BASE_URL: string;
   DB_HOST: string;
   DB_USER: string;
   DB_PORT: string;
